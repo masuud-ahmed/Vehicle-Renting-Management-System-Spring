@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Rental</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      width: 400px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    select, input[type="date"] {
+      width: calc(100% - 10px);
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<div class="form-container">
+  <h2>Add New Rental</h2>
+  <form th:object="${rental}" th:action="@{/rentals/save}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label for="vehicle.id">Vehicle:</label>
+    <select id="vehicle.id" name="vehicle.id">
+      <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.make + ' ' + vehicle.model}"></option>
+    </select>
+
+    <label for="customer.id">Customer:</label>
+    <select id="customer.id" name="customer.id">
+      <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
+    </select>
+
+    <label for="rentalStartDate">Rental Start Date:</label>
+    <input type="date" id="rentalStartDate" name="rentalStartDate" required/>
+
+    <label for="rentalEndDate">Rental End Date:</label>
+    <input type="date" id="rentalEndDate" name="rentalEndDate" required/>
+
+    <button type="submit">Save Rental</button>
+  </form>
+</div>
+</body>
+</html>

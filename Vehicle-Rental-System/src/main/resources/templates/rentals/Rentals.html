@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Rentals</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #007bff;
+      color: #fff;
+      font-weight: bold;
+    }
+    td {
+      background-color: #f9f9f9;
+    }
+    td:first-child {
+      font-weight: bold;
+    }
+    td:last-child {
+      text-align: center;
+    }
+    .action-links a {
+      color: #007bff;
+      text-decoration: none;
+      margin-right: 10px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+    .action-links a:hover {
+      background-color: #0056b3;
+      color: #fff;
+    }
+    .add-link {
+      display: inline-block;
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    .add-link:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>All Rentals</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Vehicle</th>
+      <th>Customer</th>
+      <th>Rental Start Date</th>
+      <th>Rental End Date</th>
+      <th>Total Cost</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over rentals -->
+    <tr th:each="rental : ${rentals}">
+      <td th:text="${rental.id}"></td>
+      <td th:text="${rental.vehicle.make + ' ' + rental.vehicle.model}"></td>
+      <td th:text="${rental.customer.name}"></td>
+      <td th:text="${#dates.format(rental.rentalStartDate, 'yyyy-MM-dd')}"></td>
+      <td th:text="${#dates.format(rental.rentalEndDate, 'yyyy-MM-dd')}"></td>
+      <td th:text="${#numbers.formatDecimal(rental.totalCost, 2, 'COMMA', 2, 'POINT')}"></td>
+      <td class="action-links">
+        <a th:href="@{/rentals/{id}(id=${rental.id})}" style="background-color: #28a745; color: white;">View</a>
+        <a th:href="@{/rentals/{id}/edit(id=${rental.id})}" style="background-color: #007bff; color: white;">Edit</a>
+        <a th:href="@{/rentals/{id}/delete(id=${rental.id})}" style="background-color: #dc3545; color: white;">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a href="/rentals/new" class="add-link">Add New Rental</a>
+</div>
+</body>
+</html>

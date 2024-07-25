@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rental Details</title>
+</head>
+<body>
+<h2>Rental Details</h2>
+<p>ID: <span th:text="${rental.id}"></span></p>
+<p>Vehicle: <span th:text="${rental.vehicle.make + ' ' + rental.vehicle.model}"></span></p>
+<p>Customer: <span th:text="${rental.customer.name}"></span></p>
+<p>Rental Start Date: <span th:text="${#dates.format(rental.rentalStartDate, 'yyyy-MM-dd')}"></span></p>
+<p>Rental End Date: <span th:text="${#dates.format(rental.rentalEndDate, 'yyyy-MM-dd')}"></span></p>
+<p>Total Cost: <span th:text="${#numbers.formatDecimal(rental.totalCost, 2, 'COMMA', 2, 'POINT')}"></span></p>
+<a href="/rentals" style="color: #007bff;">Back to All Rentals</a>
+</body>
+</html>
